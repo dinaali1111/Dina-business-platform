@@ -1,0 +1,103 @@
+.my-slider-container {
+    width: 100%;
+margin: 0 auto;
+   
+}
+
+.my-slider .carousel-inner img {
+    width: 100%;
+    height: auto;
+}
+
+.carousel-img-height {
+    height: 100px; 
+    object-fit: contain; 
+}
+
+@media (max-width: 992px) {
+    .my-slider-container {
+        width: 100%; 
+    }
+
+    .carousel-img-height {
+        height: 300px; 
+    }
+}
+
+
+
+.star-width {
+    width: 3%;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.star-span {
+    max-width: 7rem;
+    width: 100%;
+    background-color: black;
+    height: 0.25rem;
+    border-color: black;
+    display: block;
+}
+
+.carousel-content {
+    margin-top: 6.2rem;
+}
+
+.about-content {
+    padding: 6rem 0;
+    background: linear-gradient(to bottom, #9130e1be, #2b86e1d0);
+    color: white;
+}
+
+.about-content .star-span {
+    background-color: white;
+    border-color: white;
+}
+
+.btn-xl {
+    padding: 1rem 1.75rem;
+    font-size: 1.25rem;
+}
+
+.navbar-without-shrink {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    transition: padding-top 0.3s, padding-bottom 0.3s;
+}
+
+.brand-without-shrink {
+    font-size: 1.em;
+    transition: font-size 0.3s;
+}
+
+.navbar-shrink {
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+}
+
+.navbar-shrink .brand-shrink {
+    font-size: 1.5em;
+}
+#social {
+    padding-top: 20px;
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-bottom: 20px;
+}
+#social a{ text-decoration: none;
+    color: white;
+    font-size: 20px;
+}
+#social i {
+    color: white;
+    font-size: 30px;
+
+
+}
+#mainNav{
+    background:linear-gradient(to top, rgba(96, 96, 203, 0.812),rgba(191, 81, 191, 0.664),)
+}
