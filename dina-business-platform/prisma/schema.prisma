@@ -1,0 +1,189 @@
+// This is your Prisma schema file
+// Learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Models
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  password      String?
+  name          String?
+  emailVerified DateTime?
+  image         String?
+  role          String    @default("USER") // ADMIN, EDITOR, USER
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  profile  Profile?
+  contacts Contact[]
+  posts    BlogPost[]
+  accounts Account[]
+  sessions Session[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Profile {
+  id        String   @id @default(cuid())
+  bio       String?
+  avatar    String?
+  phone     String?
+  company   String?
+  position  String?
+  website   String?
+  linkedin  String?
+  twitter   String?
+  userId    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Service {
+  id            String   @id @default(cuid())
+  title         String
+  titleAr       String?
+  description   String
+  descriptionAr String?
+  icon          String
+  price         Float?
+  features      String? // JSON string
+  image         String?
+  order         Int      @default(0)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model FAQ {
+  id         String   @id @default(cuid())
+  question   String
+  questionAr String?
+  answer     String
+  answerAr   String?
+  category   String?
+  order      Int      @default(0)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Contact {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  subject   String
+  message   String
+  status    String   @default("PENDING") // PENDING, REVIEWED, RESOLVED, SPAM
+  notes     String?
+  userId    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User? @relation(fields: [userId], references: [id])
+}
+
+model BlogPost {
+  id          String   @id @default(cuid())
+  title       String
+  titleAr     String?
+  slug        String   @unique
+  content     String
+  contentAr   String?
+  excerpt     String?
+  excerptAr   String?
+  coverImage  String?
+  published   Boolean  @default(false)
+  featured    Boolean  @default(false)
+  views       Int      @default(0)
+  authorId    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  publishedAt DateTime?
+
+  author     User      @relation(fields: [authorId], references: [id])
+  tags       Tag[]
+  categories Category[]
+}
+
+model Tag {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  nameAr    String?
+  slug      String     @unique
+  posts     BlogPost[]
+  createdAt DateTime   @default(now())
+}
+
+model Category {
+  id          String     @id @default(cuid())
+  name        String     @unique
+  nameAr      String?
+  slug        String     @unique
+  description String?
+  posts       BlogPost[]
+  createdAt   DateTime   @default(now())
+}
+
+model Newsletter {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Settings {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       String   // JSON string
+  description String?
+  updatedAt   DateTime @updatedAt
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  action    String
+  entity    String?
+  entityId  String?
+  metadata  String? // JSON string
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+}
