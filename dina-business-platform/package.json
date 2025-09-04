@@ -75,9 +75,11 @@
     "zod": "^3.22.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.44.1",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^14.2.1",
     "@types/bcryptjs": "^2.4.6",
+    "@types/jest": "^29.5.12",
     "@types/node": "^20.10.5",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
